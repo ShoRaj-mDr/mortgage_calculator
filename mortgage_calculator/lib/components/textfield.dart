@@ -3,30 +3,51 @@ import 'package:flutter/material.dart';
 class DefaultTextField extends StatelessWidget {
   final controller;
   final String text;
-//   final bool obscureText;
+  final String? prefixString;
+  final IconData? prefixIcon;
+  //   final bool obscureText;
 
   const DefaultTextField({
     Key? key,
     this.controller,
     required this.text,
+    this.prefixString,
+    this.prefixIcon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget? my_prefix;
+    if (prefixString != null) {
+      my_prefix = Text(
+        prefixString!,
+        style: TextStyle(fontSize: 18),
+      );
+    } else if (prefixIcon != null) {
+      my_prefix = Icon(prefixIcon);
+    }
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7.5),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
       ),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+          contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          prefixIcon: SizedBox(
+            child: Center(
+              widthFactor: 0.0,
+              child: my_prefix,
+            ),
           ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(20)),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade200),
-          ),
+              borderSide: BorderSide(color: Colors.grey.shade200),
+              borderRadius: BorderRadius.circular(20)),
           fillColor: Colors.grey.shade100,
           filled: true,
           labelText: text,
@@ -38,6 +59,5 @@ class DefaultTextField extends StatelessWidget {
     );
   }
 }
-
 
 // link - https://www.youtube.com/watch?v=Dh-cTQJgM-Q
