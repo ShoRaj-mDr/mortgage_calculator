@@ -22,11 +22,6 @@ class HomePage extends StatelessWidget {
             prefixString: '\$',
           ),
 
-          // Loan Term
-          // DefaultTextField(
-          //   text: 'Loan Term',
-          //   prefixIcon: Icons.timelapse_rounded,
-          // ),
           loanTerm(),
 
           // Interest Rate
