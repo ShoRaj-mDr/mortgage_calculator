@@ -1,47 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/components/textfield.dart';
+import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
 class HomePage extends StatelessWidget {
+  // navigate to next screen
+  void navigateToMontlyPaymentScreen(BuildContext context) {
+    print('Button pressed! Navigate to Montly Payment Screen');
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MonthlyPaymentScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
+        // backgroundColor: Colors.grey,
         body: Container(
-      padding: EdgeInsets.all(15.0),
-      child: ListView(
-        children: [
-          // home loan
-          DefaultTextField(
-            text: 'Home Price',
-            prefixString: '\$',
-          ),
+          padding: EdgeInsets.all(15.0),
+          child: ListView(
+            children: [
+              // home loan
+              DefaultTextField(
+                text: 'Home Price',
+                prefixString: '\$',
+              ),
 
-          // Down Payment
-          DefaultTextField(
-            text: 'Down Payment',
-            prefixString: '\$',
-          ),
+              // Down Payment
+              DefaultTextField(
+                text: 'Down Payment',
+                prefixString: '\$',
+              ),
 
-          loanTerm(),
+              // function. add this separate maybe?
+              loanTerm(),
 
-          // Interest Rate
-          DefaultTextField(
-            text: 'Rate',
-            prefixString: '\%',
-          ),
+              // Interest Rate
+              DefaultTextField(
+                text: 'Rate',
+                prefixString: '\%',
+              ),
 
-          // ZipCode
-          DefaultTextField(
-            text: 'Zip code',
-            prefixIcon: Icons.location_on_outlined,
-          ),
+              // ZipCode
+              DefaultTextField(
+                text: 'Zip code',
+                prefixIcon: Icons.location_on_outlined,
+              ),
 
-          const SizedBox(
-            height: 10,
+              const SizedBox(
+                height: 29,
+              ),
+
+              // Add calculate payment button and navigate to montly payment screen
+              CustomMaterialButton(
+                  buttonText: 'Calculate',
+                  onPressed: () {
+                    navigateToMontlyPaymentScreen(context);
+                  }),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -80,7 +102,7 @@ Widget loanTermBtn(int numOfYears) {
     child: Text(
       numOfYears.toString(),
       style: TextStyle(
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
         // color: isSelected ? Colors.white : Colors.black,
         color: Colors.black,
