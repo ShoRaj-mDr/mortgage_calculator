@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/components/circleProgress.dart';
 
 class MonthlyPaymentScreen extends StatelessWidget {
@@ -73,14 +74,20 @@ class PaymentDetailSection extends StatelessWidget {
           buildPaymentDetailRow("Homeowner's insurance", Colors.green),
           buildPaymentDetailRow("Property tax", Colors.red),
           buildPaymentDetailRow("HOA fees", Colors.orange),
+
           Spacer(),
+
           //Add recalculation Button
-          TextButton(
-            onPressed: null,
-            child: Text(
-              "Recalculate",
-            ),
-          ),
+          CustomMaterialButton(
+              buttonText: 'Recalculate',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Recalculating...'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }),
         ],
       ),
     );

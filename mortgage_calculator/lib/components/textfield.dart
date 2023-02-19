@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DefaultTextField extends StatelessWidget {
   final controller;
@@ -34,6 +35,10 @@ class DefaultTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
+        keyboardType: TextInputType.number,
+        // inputFormatters: <TextInputFormatter>[
+        //   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+        // ],
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           prefixIcon: SizedBox(
@@ -52,8 +57,10 @@ class DefaultTextField extends StatelessWidget {
           filled: true,
           labelText: text,
           labelStyle: TextStyle(
-              // color: Color(0xFF6200EE),
-              ),
+            // color: Color(0xFF6200EE),
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+          ),
         ),
       ),
     );
