@@ -2,68 +2,103 @@ import 'package:flutter/material.dart';
 import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/components/textfield.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
+import 'package:mortgage_calculator/util/constant.dart';
+import 'package:mortgage_calculator/services/formulas.dart';
 
-class HomePage extends StatelessWidget {
-  // navigate to next screen
-  void navigateToMontlyPaymentScreen(BuildContext context) {
-    print('Button pressed! Navigate to Montly Payment Screen');
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MonthlyPaymentScreen()));
-  }
+class HomePage extends StatefulWidget {
+  @override
+  HomePageFormState createState() => HomePageFormState();
+}
 
+// navigate to next screen
+// void navigateToMontlyPaymentScreen(BuildContext context) {
+//   print('Button pressed! Navigate to Montly Payment Screen');
+//   Navigator.push(
+//       context, MaterialPageRoute(builder: (context) => MonthlyPaymentScreen()));
+// }
+
+class HomePageFormState extends State<HomePage> {
+  final _buildHomePriceController = TextEditingController();
+  final _buildDownPayment = TextEditingController();
+  final _buildRate = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      // backgroundColor: Colors.grey,
+      body: Container(
+        padding: EdgeInsets.all(15.0),
+        child: ListView(
+          children: [
+            // home loan
+            DefaultTextField(
+              controller: _buildHomePriceController,
+              text: Constant.HOME_PRICE,
+              prefixString: '\$',
+            ),
+
+            // Down Payment
+            DefaultTextField(
+              controller: _buildDownPayment,
+              text: Constant.DOWN_PAYMENT,
+              prefixString: '\$',
+            ),
+
+            // function. add this separate maybe?
+            loanTerm(),
+
+            // Interest Rate
+            DefaultTextField(
+              controller: _buildRate,
+              text: Constant.RATE,
+              prefixString: '\%',
+            ),
+
+            // ZipCode
+            DefaultTextField(
+              text: Constant.ZIP_CODE,
+              prefixIcon: Icons.location_on_outlined,
+            ),
+
+            const SizedBox(
+              height: 29,
+            ),
+
+            // Add calculate payment button and navigate to montly payment screen
+            CustomMaterialButton(
+                buttonText: 'Calculate',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => new MonthlyPaymentScreen(
+                          principal: _buildHomePriceController.text),
+                    ),
+                  );
+                  print(_buildHomePriceController.text);
+                  print(_buildDownPayment.text);
+                  print(_buildRate.text);
+                  mortgagePaymentFormula(
+                    //Principal
+                    double.parse(_buildHomePriceController.text),
+                    //Annual Interest Rate
+                    double.parse(_buildDownPayment.text),
+                    //Term in Years
+                    //int.parse(_buildRate.text),
+                    30,
+                    //Monthly Interest Rate
+                    double.parse(_buildRate.text),
+                  );
+                  // navigateToMontlyPaymentScreen(context);
+                }),
+          ],
         ),
-        // backgroundColor: Colors.grey,
-        body: Container(
-          padding: EdgeInsets.all(15.0),
-          child: ListView(
-            children: [
-              // home loan
-              DefaultTextField(
-                text: 'Home Price',
-                prefixString: '\$',
-              ),
-
-              // Down Payment
-              DefaultTextField(
-                text: 'Down Payment',
-                prefixString: '\$',
-              ),
-
-              // function. add this separate maybe?
-              loanTerm(),
-
-              // Interest Rate
-              DefaultTextField(
-                text: 'Rate',
-                prefixString: '\%',
-              ),
-
-              // ZipCode
-              DefaultTextField(
-                text: 'Zip code',
-                prefixIcon: Icons.location_on_outlined,
-              ),
-
-              const SizedBox(
-                height: 29,
-              ),
-
-              // Add calculate payment button and navigate to montly payment screen
-              CustomMaterialButton(
-                  buttonText: 'Calculate',
-                  onPressed: () {
-                    navigateToMontlyPaymentScreen(context);
-                  }),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
 

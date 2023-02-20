@@ -3,14 +3,16 @@ import 'dart:math';
 
 //work on the unit testing for the formual
 mortgagePaymentFormula(double principal, double annualInterestRate,
-    int termInYears, double monthlyInterestRate, int numberOfPayments) {
-  numberOfPayments = termInYears * Constant.MONTHS_IN_A_YEAR;
+    int termInYears, double monthlyInterestRate) {
+  int numberOfPayments = termInYears * Constant.MONTHS_IN_A_YEAR;
 
   // Monthly payment calculator
   double monthlyPayment = principal *
       (monthlyInterestRate * (pow(1 + monthlyInterestRate, numberOfPayments))) /
       ((pow(1 + monthlyInterestRate, numberOfPayments)) - 1);
 
+  print("monthlyPayment");
+  print(monthlyPayment);
   return monthlyPayment;
 }
 
