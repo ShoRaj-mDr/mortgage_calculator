@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/components/circleProgress.dart';
 
+// ignore: must_be_immutable
 class MonthlyPaymentScreen extends StatelessWidget {
+  final String principal;
+  const MonthlyPaymentScreen({this.principal = ""});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +47,7 @@ class MonthlyPaymentScreen extends StatelessWidget {
                   ),
                   //Build Custom Circle Progress Bar
                   CircleProgressBar(
-                    totalPayment: 4000.00,
+                    totalPayment: double.parse(principal),
                   ),
                   //Build Payment Detail Section
                   PaymentDetailSection()
@@ -69,25 +72,18 @@ class PaymentDetailSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          //Build Payment Rows
           buildPaymentDetailRow("Principal & interest", Colors.purple),
           buildPaymentDetailRow("Homeowner's insurance", Colors.green),
           buildPaymentDetailRow("Property tax", Colors.red),
           buildPaymentDetailRow("HOA fees", Colors.orange),
-
           Spacer(),
-
           //Add recalculation Button
-          CustomMaterialButton(
-              buttonText: 'Recalculate',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Recalculating...'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              }),
+          TextButton(
+            onPressed: null,
+            child: Text(
+              "Recalculate",
+            ),
+          ),
         ],
       ),
     );
