@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
+import 'package:mortgage_calculator/views/CustomPageView.dart';
 import 'package:mortgage_calculator/components/textfield.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 import 'package:mortgage_calculator/util/constant.dart';
@@ -49,7 +50,12 @@ class HomePageFormState extends State<HomePage> {
             ),
 
             // function. add this separate maybe?
-            loanTerm(),
+            // loanTerm(),
+            DefaultTextField(
+              // controller: _buildDownPayment,
+              text: Constant.LOAN_TERM,
+              prefixIcon: Icons.timelapse_outlined,
+            ),
 
             // Interest Rate
             DefaultTextField(
@@ -65,7 +71,7 @@ class HomePageFormState extends State<HomePage> {
             ),
 
             const SizedBox(
-              height: 29,
+              height: 28,
             ),
 
             // Add calculate payment button and navigate to montly payment screen
@@ -73,26 +79,29 @@ class HomePageFormState extends State<HomePage> {
                 buttonText: 'Calculate',
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                      builder: (context) => new MonthlyPaymentScreen(
-                          principal: _buildHomePriceController.text),
-                    ),
-                  );
-                  print(_buildHomePriceController.text);
-                  print(_buildDownPayment.text);
-                  print(_buildRate.text);
-                  mortgagePaymentFormula(
-                    //Principal
-                    double.parse(_buildHomePriceController.text),
-                    //Annual Interest Rate
-                    double.parse(_buildDownPayment.text),
-                    //Term in Years
-                    //int.parse(_buildRate.text),
-                    30,
-                    //Monthly Interest Rate
-                    double.parse(_buildRate.text),
-                  );
+                      context,
+                      new MaterialPageRoute(
+                        //   builder: (context) => new MonthlyPaymentScreen(
+                        //       principal: _buildHomePriceController.text),
+                        // ),
+                        builder: (context) => new CustomPageView(),
+                      ));
+
+                  // print(_buildHomePriceController.text);
+                  // print(_buildDownPayment.text);
+                  // print(_buildRate.text);
+
+                  // mortgagePaymentFormula(
+                  //   //Principal
+                  //   double.parse(_buildHomePriceController.text),
+                  //   //Annual Interest Rate
+                  //   double.parse(_buildDownPayment.text),
+                  //   //Term in Years
+                  //   //int.parse(_buildRate.text),
+                  //   30,
+                  //   //Monthly Interest Rate
+                  //   double.parse(_buildRate.text),
+                  // );
                   // navigateToMontlyPaymentScreen(context);
                 }),
           ],
@@ -102,46 +111,46 @@ class HomePageFormState extends State<HomePage> {
   }
 }
 
-// not complete. watch this - https://www.youtube.com/watch?v=TPKFYq7I6Kk&t=1361s
-loanTerm() {
-  var loanYears = [30, 20, 15, 10];
-  return Container(
-    padding: EdgeInsets.all(7.0),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Text("Loan Term"),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: loanYears.map((e) => loanTermBtn(e)).toList(),
-        ),
-      ],
-    ),
-  );
-}
+// // not complete. watch this - https://www.youtube.com/watch?v=TPKFYq7I6Kk&t=1361s
+// loanTerm() {
+//   var loanYears = [30, 20, 15, 10];
+//   return Container(
+//     padding: EdgeInsets.all(7.0),
+//     child: Column(
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             // Text("Loan Term"),
+//           ],
+//         ),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: loanYears.map((e) => loanTermBtn(e)).toList(),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
-Widget loanTermBtn(int numOfYears) {
-  return Container(
-    height: 54,
-    width: 75,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        // color: isSelected ? Colors.purple[100] : Colors.grey,
-        color: Colors.grey.shade200),
-    child: Text(
-      numOfYears.toString(),
-      style: TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w400,
-        // color: isSelected ? Colors.white : Colors.black,
-        color: Colors.black,
-      ),
-    ),
-  );
-}
+// Widget loanTermBtn(int numOfYears) {
+//   return Container(
+//     height: 54,
+//     width: 75,
+//     alignment: Alignment.center,
+//     decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(20),
+//         // color: isSelected ? Colors.purple[100] : Colors.grey,
+//         color: Colors.grey.shade200),
+//     child: Text(
+//       numOfYears.toString(),
+//       style: TextStyle(
+//         fontSize: 15,
+//         fontWeight: FontWeight.w400,
+//         // color: isSelected ? Colors.white : Colors.black,
+//         color: Colors.black,
+//       ),
+//     ),
+//   );
+// }

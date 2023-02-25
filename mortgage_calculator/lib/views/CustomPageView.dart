@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/components/ProviderPageController.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
 class CustomPageView extends StatefulWidget {
@@ -25,18 +26,19 @@ class _CustomPageViewState extends State<CustomPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          PageView.builder(
+        fit: StackFit.expand,
+        children: <Widget>[
+          ProviderPageController(
+            pageController: _pageController,
+            child: PageView(
               controller: _pageController,
-              onPageChanged: (int page) {
-                setState(() {
-                  _activePage = page;
-                });
-              },
-              itemCount: _pages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _pages[index % _pages.length];
-              })
+              children: <Widget>[
+                // PageOne(),
+                MonthlyPaymentScreen(principal: '1500'),
+                PageTwo(),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -71,7 +73,6 @@ class PageTwo extends StatelessWidget {
   }
 }
 
-
-
-// Note: 
-// pageview youtube: https://www.youtube.com/watch?v=uPaH7aJZs-M
+// Resource:
+// using: https://github.com/andersoncscz/flutter-pageview-login
+// another one : https://www.kindacode.com/article/flutter-pageview-examples/
