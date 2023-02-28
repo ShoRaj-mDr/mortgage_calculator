@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/views/CustomPageView.dart';
 import 'package:mortgage_calculator/views/home_page.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
@@ -27,11 +28,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: HomePage(),
-      //home: MonthlyPaymentScreen(),
+      // home: CustomPageView(),
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/home': (context) => HomePage(),
-        '/payment': (context) => MonthlyPaymentScreen(),
+        // '/payment': (context) => MonthlyPaymentScreen(),
       },
     );
   }
