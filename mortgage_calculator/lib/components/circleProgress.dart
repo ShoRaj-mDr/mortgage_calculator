@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 //Create CircleProgress Widget that will be used on the Montly Payment Screen
 class CircleProgressBar extends StatefulWidget {
-  final double totalPayment;
+  final double? totalPayment;
 
   const CircleProgressBar({Key? key, required this.totalPayment})
       : super(key: key);
@@ -20,7 +20,7 @@ class _CircleProgressBarState extends State<CircleProgressBar>
   @override
   void initState() {
     super.initState();
-    payment = widget.totalPayment;
+    payment = widget.totalPayment!;
     progressController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 11000));
     animation = Tween<double>(begin: 0, end: 0.9).animate(progressController)
@@ -58,7 +58,7 @@ class _CircleProgressBarState extends State<CircleProgressBar>
 class CircleProgress extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    var strokeWidth = 10.0;
+    var strokeWidth = 12.0;
 
     Paint outerCircle = Paint()
       ..strokeWidth = strokeWidth

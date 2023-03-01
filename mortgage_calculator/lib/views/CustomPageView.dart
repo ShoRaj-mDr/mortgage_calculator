@@ -3,7 +3,9 @@ import 'package:mortgage_calculator/components/ProviderPageController.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
 class CustomPageView extends StatefulWidget {
-  const CustomPageView({Key? key}) : super(key: key);
+  final double? monthlyRate;
+
+  const CustomPageView({Key? key, this.monthlyRate}) : super(key: key);
 
   @override
   State<CustomPageView> createState() => _CustomPageViewState();
@@ -16,7 +18,7 @@ class _CustomPageViewState extends State<CustomPageView> {
   int _activePage = 0;
 
   List<Widget> _pages = [
-    // const MonthlyPaymentScreen(principal: '1500'),
+    const MonthlyPaymentScreen(),
     const PageOne(),
     const PageTwo(),
     // const PageThree(),
@@ -33,8 +35,8 @@ class _CustomPageViewState extends State<CustomPageView> {
             child: PageView(
               controller: _pageController,
               children: <Widget>[
-                // PageOne(),
-                MonthlyPaymentScreen(principal: '1500'),
+                //PageOne(),
+                MonthlyPaymentScreen(monthlyPayment: widget.monthlyRate),
                 PageTwo(),
               ],
             ),
