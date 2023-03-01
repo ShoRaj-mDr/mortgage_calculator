@@ -22,13 +22,15 @@ class HomePageFormState extends State<HomePage> {
   final _buildHomePriceController = TextEditingController();
   final _buildDownPayment = TextEditingController();
   final _buildRate = TextEditingController();
+  late double monthlyPayment;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        title: Text(Constant.MORTGAGE_CALCULATOR),
+        centerTitle: true,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
       ),
       // backgroundColor: Colors.grey,
       body: Container(
@@ -81,27 +83,21 @@ class HomePageFormState extends State<HomePage> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        //   builder: (context) => new MonthlyPaymentScreen(
-                        //       principal: _buildHomePriceController.text),
-                        // ),
-                        builder: (context) => new CustomPageView(),
+                        builder: (context) =>
+                            new CustomPageView(monthlyRate: monthlyPayment),
                       ));
 
-                  // print(_buildHomePriceController.text);
-                  // print(_buildDownPayment.text);
-                  // print(_buildRate.text);
-
-                  // mortgagePaymentFormula(
-                  //   //Principal
-                  //   double.parse(_buildHomePriceController.text),
-                  //   //Annual Interest Rate
-                  //   double.parse(_buildDownPayment.text),
-                  //   //Term in Years
-                  //   //int.parse(_buildRate.text),
-                  //   30,
-                  //   //Monthly Interest Rate
-                  //   double.parse(_buildRate.text),
-                  // );
+                  monthlyPayment = mortgagePaymentFormula(
+                    //Principal
+                    double.parse(_buildHomePriceController.text),
+                    //Annual Interest Rate
+                    double.parse(_buildDownPayment.text),
+                    //Term in Years
+                    //int.parse(_buildRate.text),
+                    30,
+                    //Monthly Interest Rate
+                    double.parse(_buildRate.text),
+                  );
                   // navigateToMontlyPaymentScreen(context);
                 }),
           ],

@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/components/circleProgress.dart';
+import 'package:mortgage_calculator/util/constant.dart';
 
 // ignore: must_be_immutable
 class MonthlyPaymentScreen extends StatelessWidget {
-  final String principal;
-  const MonthlyPaymentScreen({this.principal = ""});
+  final double? monthlyPayment;
+  const MonthlyPaymentScreen({this.monthlyPayment});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        title: Text(Constant.MONTHLY_PAYMENT),
+        centerTitle: true,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () => {Navigator.of(context).pop()},
+        ),
       ),
       backgroundColor: Colors.white,
       body: Container(
-        child: Column(
+        child: ListView(
           children: [
             // Header
             Align(
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Monthly",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Payment",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   //Build Custom Circle Progress Bar
                   CircleProgressBar(
-                    totalPayment: double.parse(principal),
+                    totalPayment: monthlyPayment,
                   ),
                   //Build Payment Detail Section
-                  PaymentDetailSection()
+                  PaymentDetailSection(),
+                  CustomMaterialButton(
+                    buttonText: 'Recalculate',
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   new MaterialPageRoute(
+                      //     builder: (context) => new MonthlyPaymentScreen(
+                      //         monthlyPayment: monthlyPayment),
+                      //   ),
+                      // );
+                    },
+                  )
                 ],
               ),
             ),
@@ -76,14 +76,6 @@ class PaymentDetailSection extends StatelessWidget {
           buildPaymentDetailRow("Homeowner's insurance", Colors.green),
           buildPaymentDetailRow("Property tax", Colors.red),
           buildPaymentDetailRow("HOA fees", Colors.orange),
-          Spacer(),
-          //Add recalculation Button
-          TextButton(
-            onPressed: null,
-            child: Text(
-              "Recalculate",
-            ),
-          ),
         ],
       ),
     );
