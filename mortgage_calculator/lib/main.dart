@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mortgage_calculator/service/mortgageService.dart';
 import 'package:mortgage_calculator/views/CustomPageView.dart';
 import 'package:mortgage_calculator/views/home_page.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
 void main() {
+  //singleton set up at app initialization
+  setUp();
   runApp(MyApp());
 }
 

@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
+import 'package:mortgage_calculator/model/mortgage.dart';
 import 'package:mortgage_calculator/views/CustomPageView.dart';
 import 'package:mortgage_calculator/components/textfield.dart';
-import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 import 'package:mortgage_calculator/util/constant.dart';
-import 'package:mortgage_calculator/services/formulas.dart';
 
 class HomePage extends StatefulWidget {
   @override
   HomePageFormState createState() => HomePageFormState();
 }
 
-// navigate to next screen
-// void navigateToMontlyPaymentScreen(BuildContext context) {
-//   print('Button pressed! Navigate to Montly Payment Screen');
-//   Navigator.push(
-//       context, MaterialPageRoute(builder: (context) => MonthlyPaymentScreen()));
-// }
-
 class HomePageFormState extends State<HomePage> {
   final _buildHomePriceController = TextEditingController();
   final _buildDownPayment = TextEditingController();
   final _buildRate = TextEditingController();
-  late double monthlyPayment;
+
+  Mortgage mortgage = GetIt.instance.get<Mortgage>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,22 +78,19 @@ class HomePageFormState extends State<HomePage> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) =>
-                            new CustomPageView(monthlyRate: monthlyPayment),
+                        builder: (context) => new CustomPageView(),
                       ));
 
-                  monthlyPayment = mortgagePaymentFormula(
-                    //Principal
-                    double.parse(_buildHomePriceController.text),
-                    //Annual Interest Rate
-                    double.parse(_buildDownPayment.text),
-                    //Term in Years
-                    //int.parse(_buildRate.text),
-                    30,
-                    //Monthly Interest Rate
-                    double.parse(_buildRate.text),
-                  );
-                  // navigateToMontlyPaymentScreen(context);
+                  // setting values to mortgage model
+                  mortgage.principal =
+                      double.parse(_buildHomePriceController.text);
+                  print(mortgage.principal);
+                  mortgage.downPayment = double.parse(_buildDownPayment.text);
+                  print(mortgage.downPayment);
+                  // mortgage.loanTerm = int.parse(_buildRate.text);
+                  // print(mortgage.loanTerm);
+                  mortgage.interestRate = double.parse(_buildRate.text);
+                  print(mortgage.interestRate);
                 }),
           ],
         ),
