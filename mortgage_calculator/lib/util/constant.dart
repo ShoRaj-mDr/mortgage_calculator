@@ -6,6 +6,6 @@ class Constant {
   static const RATE = "RATE";
   static const ZIP_CODE = "Zip Code";
   static const principal = "";
-  static const MONTHLY_PAYMENT = "Monthly payment";
+  static const MONTHLY_PAYMENT = "Payment Breakdown";
   static const MORTGAGE_CALCULATOR = "Mortgage Calculator";
 }

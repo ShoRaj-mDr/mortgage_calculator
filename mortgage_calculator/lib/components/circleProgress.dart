@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mortgage_calculator/model/mortgage.dart';
+import 'package:mortgage_calculator/service/formulas.dart';
 
 //Create CircleProgress Widget that will be used on the Montly Payment Screen
 class CircleProgressBar extends StatefulWidget {
-  final double? totalPayment;
-
-  const CircleProgressBar({Key? key, required this.totalPayment})
-      : super(key: key);
+  const CircleProgressBar({Key? key}) : super(key: key);
   @override
   State<CircleProgressBar> createState() => _CircleProgressBarState();
 }
@@ -16,11 +16,14 @@ class _CircleProgressBarState extends State<CircleProgressBar>
   late AnimationController progressController;
   late Animation animation;
   late double payment;
+  Mortgage mortgage = GetIt.instance.get<Mortgage>();
 
   @override
   void initState() {
     super.initState();
-    payment = widget.totalPayment!;
+
+    payment = mortgagePaymentFormula(
+        mortgage.principal, mortgage.downPayment, 30, mortgage.interestRate);
     progressController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 11000));
     animation = Tween<double>(begin: 0, end: 0.9).animate(progressController)
@@ -41,7 +44,7 @@ class _CircleProgressBarState extends State<CircleProgressBar>
               width: 250,
               alignment: Alignment.center,
               child: Text(
-                "\$ " + widget.totalPayment.toString(),
+                "\$ " + payment.toStringAsFixed(2),
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 25,
