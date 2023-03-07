@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mortgage_calculator/components/ProviderPageController.dart';
+import 'package:mortgage_calculator/views/home_page.dart';
 import 'package:mortgage_calculator/views/monthly_payment_screen.dart';
 
 class CustomPageView extends StatefulWidget {
@@ -16,6 +17,7 @@ class _CustomPageViewState extends State<CustomPageView> {
   int _activePage = 0;
 
   List<Widget> _pages = [
+    HomePage(),
     MonthlyPaymentScreen(),
     const PageOne(),
     const PageTwo(),
@@ -33,7 +35,7 @@ class _CustomPageViewState extends State<CustomPageView> {
             child: PageView(
               controller: _pageController,
               children: <Widget>[
-                //PageOne(),
+                HomePage(),
                 MonthlyPaymentScreen(),
                 PageTwo(),
               ],

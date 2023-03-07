@@ -30,12 +30,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: HomePage(),
-      // home: CustomPageView(),
+      home: CustomPageView(),
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
+
         '/home': (context) => HomePage(),
-        // '/payment': (context) => MonthlyPaymentScreen(),
+        '/monthly_payment_screen': (context) => MonthlyPaymentScreen(),
+        '/CustomPageView': (context) => CustomPageView(),
       },
     );
   }

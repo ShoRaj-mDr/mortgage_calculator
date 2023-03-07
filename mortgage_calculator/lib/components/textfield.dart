@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mortgage_calculator/model/mortgage.dart';
 
 class DefaultTextField extends StatelessWidget {
   final controller;
@@ -18,6 +20,7 @@ class DefaultTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Mortgage mortgage = GetIt.instance.get<Mortgage>();
     Widget? my_prefix;
     if (prefixString != null) {
       my_prefix = Text(
@@ -39,6 +42,9 @@ class DefaultTextField extends StatelessWidget {
         // inputFormatters: <TextInputFormatter>[
         //   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
         // ],
+        onChanged: (String input) {
+          saveToObject(mortgage, input, text);
+        },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           prefixIcon: SizedBox(
@@ -64,6 +70,32 @@ class DefaultTextField extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void saveToObject(Mortgage mortgage, String input, String text) {
+  switch (text) {
+    case "A":
+      {
+        mortgage.principal = double.parse(input);
+        print("mortgage.principal");
+        print(mortgage.principal);
+      }
+      break;
+    case "B":
+      {
+        mortgage.loanTerm = int.parse(input);
+        print("mortgage.loanTerm");
+        print(mortgage.loanTerm);
+      }
+      break;
+    case "B":
+      {
+        mortgage.interestRate = double.parse(input);
+        print("mortgage.interestRate");
+        print(mortgage.interestRate);
+      }
+      break;
   }
 }
 

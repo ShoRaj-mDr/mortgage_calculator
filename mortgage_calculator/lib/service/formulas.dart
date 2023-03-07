@@ -2,22 +2,13 @@ import 'package:mortgage_calculator/util/constant.dart';
 import 'dart:math';
 
 //work on the unit testing for the formual
-mortgagePaymentFormula(double principal, double annualInterestRate,
-    int termInYears, double monthlyInterestRate) {
-  int numberOfPayments = termInYears * Constant.MONTHS_IN_A_YEAR;
+mortgagePaymentFormula(double loanAmount, double interestRate, int loanTerm) {
+  //declaring formula variables
+  double monthlyInterestRate = interestRate / 100 / Constant.MONTHS_IN_A_YEAR;
+  int numberOfPayments = loanTerm * Constant.MONTHS_IN_A_YEAR;
+  double numerator =
+      monthlyInterestRate * (pow(1 + monthlyInterestRate, numberOfPayments));
+  double denominator = pow(1 + monthlyInterestRate, numberOfPayments) - 1;
 
-  // Monthly payment calculator
-  double monthlyPayment = principal *
-      (monthlyInterestRate * (pow(1 + monthlyInterestRate, numberOfPayments))) /
-      ((pow(1 + monthlyInterestRate, numberOfPayments)) - 1);
-
-  print("monthlyPayment");
-  print(monthlyPayment);
-  return monthlyPayment;
+  return loanAmount * (numerator / denominator);
 }
-
-//convert all the dollor amount (prices) into 2 two decimal places. round by the two decimal places
-decimalConversion(double montlyPayment) {}
-
-//morgage payment formula in JAVA 
-//https://www.youtube.com/watch?v=7qsrRlOqv4c

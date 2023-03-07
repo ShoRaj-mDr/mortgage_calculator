@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mortgage_calculator/components/CustomMaterialButton.dart';
 import 'package:mortgage_calculator/model/mortgage.dart';
+import 'package:mortgage_calculator/service/formulas.dart';
 import 'package:mortgage_calculator/views/CustomPageView.dart';
 import 'package:mortgage_calculator/components/textfield.dart';
 import 'package:mortgage_calculator/util/constant.dart';
@@ -12,91 +13,133 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageFormState extends State<HomePage> {
-  final _buildHomePriceController = TextEditingController();
-  final _buildDownPayment = TextEditingController();
-  final _buildRate = TextEditingController();
-
   Mortgage mortgage = GetIt.instance.get<Mortgage>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(Constant.MORTGAGE_CALCULATOR),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      // backgroundColor: Colors.grey,
-      body: Container(
-        padding: EdgeInsets.all(15.0),
-        child: ListView(
-          children: [
-            // home loan
-            DefaultTextField(
-              controller: _buildHomePriceController,
-              text: Constant.HOME_PRICE,
-              prefixString: '\$',
-            ),
-
-            // Down Payment
-            DefaultTextField(
-              controller: _buildDownPayment,
-              text: Constant.DOWN_PAYMENT,
-              prefixString: '\$',
-            ),
-
-            // function. add this separate maybe?
-            // loanTerm(),
-            DefaultTextField(
-              // controller: _buildDownPayment,
-              text: Constant.LOAN_TERM,
-              prefixIcon: Icons.timelapse_outlined,
-            ),
-
-            // Interest Rate
-            DefaultTextField(
-              controller: _buildRate,
-              text: Constant.RATE,
-              prefixString: '\%',
-            ),
-
-            // ZipCode
-            DefaultTextField(
-              text: Constant.ZIP_CODE,
-              prefixIcon: Icons.location_on_outlined,
-            ),
-
-            const SizedBox(
-              height: 28,
-            ),
-
-            // Add calculate payment button and navigate to montly payment screen
-            CustomMaterialButton(
-                buttonText: 'Calculate',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (context) => new CustomPageView(),
-                      ));
-
-                  // setting values to mortgage model
-                  mortgage.principal =
-                      double.parse(_buildHomePriceController.text);
-                  print(mortgage.principal);
-                  mortgage.downPayment = double.parse(_buildDownPayment.text);
-                  print(mortgage.downPayment);
-                  // mortgage.loanTerm = int.parse(_buildRate.text);
-                  // print(mortgage.loanTerm);
-                  mortgage.interestRate = double.parse(_buildRate.text);
-                  print(mortgage.interestRate);
-                }),
-          ],
-        ),
-      ),
-    );
+        backgroundColor: Colors.grey.withOpacity(0.25),
+        body: getBody(context, mortgage));
   }
+}
+
+Widget getBody(BuildContext context, Mortgage mortgage) {
+  final _buildHomePriceController = TextEditingController();
+  final _buildDownPayment = TextEditingController();
+  final _buildInterestRate = TextEditingController();
+  final _buildRate = TextEditingController();
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        Container(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    // BoxShadow(
+                    //     color: Colors.grey.withOpacity(0.25),
+                    //     spreadRadius: 10,
+                    //     blurRadius: 3)
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 20, right: 100, bottom: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            Constant.MORTGAGE_CALCULATOR,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              // home loan
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Container(
+                  child: Column(
+                    children: [
+                      DefaultTextField(
+                        controller: _buildHomePriceController,
+                        text: Constant.HOME_PRICE,
+                        prefixString: '\$',
+                      ), // Down Payment
+                      DefaultTextField(
+                        controller: _buildDownPayment,
+                        text: Constant.DOWN_PAYMENT,
+                        prefixString: '\$',
+                      ),
+
+                      // function. add this separate maybe?
+                      // loanTerm(),
+                      DefaultTextField(
+                        controller: _buildInterestRate,
+                        text: Constant.LOAN_TERM,
+                        prefixIcon: Icons.timelapse_outlined,
+                      ),
+
+                      // Interest Rate
+                      DefaultTextField(
+                        controller: _buildRate,
+                        text: Constant.RATE,
+                        prefixString: '\%',
+                      ),
+
+                      // ZipCode
+                      DefaultTextField(
+                        text: Constant.ZIP_CODE,
+                        prefixIcon: Icons.location_on_outlined,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // Add calculate payment button and navigate to montly payment screen
+                      // CustomMaterialButton(
+                      //   buttonText: 'Calculate',
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         new MaterialPageRoute(
+                      //           builder: (context) => new CustomPageView(),
+                      //         ));
+                      //     // setting values to mortgage model
+                      //     mortgage.principal =
+                      //         double.parse(_buildHomePriceController.text);
+                      //     print(mortgage.principal);
+                      //     // mortgage.downPayment = double.parse(_buildDownPayment.text);
+                      //     // print(mortgage.downPayment);
+                      //     // mortgage.loanTerm = int.parse(_buildRate.text);
+                      //     // print(mortgage.loanTerm);
+                      //     mortgage.interestRate = double.parse(_buildRate.text);
+                      //     print(mortgage.interestRate);
+                      //   },
+                      // ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 // // not complete. watch this - https://www.youtube.com/watch?v=TPKFYq7I6Kk&t=1361s

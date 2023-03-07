@@ -21,9 +21,8 @@ class _CircleProgressBarState extends State<CircleProgressBar>
   @override
   void initState() {
     super.initState();
-
-    payment = mortgagePaymentFormula(
-        mortgage.principal, mortgage.downPayment, 30, mortgage.interestRate);
+    payment =
+        mortgagePaymentFormula(mortgage.principal, mortgage.interestRate, 30);
     progressController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 11000));
     animation = Tween<double>(begin: 0, end: 0.9).animate(progressController)
